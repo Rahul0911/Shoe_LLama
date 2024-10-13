@@ -1,3 +1,3 @@
 # Shoe-Llama
 
-We will be custom training on of the Llama models
+We will be custom training one of the Llama models
