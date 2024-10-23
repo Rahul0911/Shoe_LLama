@@ -19,13 +19,15 @@ class UarmourSpider(scrapy.Spider):
             relative_url = products.css('a.ProductTile_product-item-link__tSc19::attr(href)').get()
             
             if relative_url:    
-                il.add_value('link', base_url + relative_url)
+                il.add_value('link', response.urljoin(relative_url))
 
             yield il.load_item()
             
-        
+        next_page = response.css('a[data-testid="pager-next"]::attr(href)').get()
 
-        next_page = base_url + response.css('a.link_underline').attrib['href']
-
-        if next_page is not None:
-            yield response.follow(next_page, callback=self.parse)
+        if next_page:
+            next_page_url = response.urljoin(next_page)
+            self.log(f"Next page URL: {next_page_url}")  # Add this line to log the next page URL
+            yield response.follow(next_page_url, callback=self.parse)
+        else:
+            self.log("No next page found.")  # Log if no next page is found
