@@ -1,4 +1,5 @@
 import scrapy
+#response.css('div.product-card_product-card-content___bjeq a::attr(href)').get()
 
 class uacrawl(scrapy.Spider):
     name = 'armour_2'
